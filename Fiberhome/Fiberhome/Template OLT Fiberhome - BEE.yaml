@@ -1,0 +1,342 @@
+zabbix_export:
+  version: '6.0'
+  date: '2023-10-14T17:52:09Z'
+  groups:
+    - uuid: 7df96b18c230490a9a0a9e2307226338
+      name: Templates
+  templates:
+    - uuid: f41dc3502ef74037951df237910f6b1a
+      template: 'Template OLT Fiberhome - BEE'
+      name: 'Template OLT Fiberhome - BEE'
+      groups:
+        - name: Templates
+      items:
+        - uuid: a13be02f5cf943648d66d7b0b397daee
+          name: 'Fan Status'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.5875.800.3.60.2.1.1.21
+          key: fanAlarmStatus
+          delay: '300'
+          history: 7d
+          trends: 30d
+          valuemap:
+            name: fanAlarmStatus
+          tags:
+            - tag: Application
+              value: Chassi
+        - uuid: 81dbc36b1daf496e8b9f7e493f396680
+          name: Descrição
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.2.1.1.1.0
+          key: sysDescr.0
+          delay: '3600'
+          history: 30d
+          trends: '0'
+          value_type: CHAR
+          tags:
+            - tag: Application
+              value: Chassi
+        - uuid: 809c7976557a40a8b9bcf98f570cd87a
+          name: 'Temperatura da OLT'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.5875.800.3.9.4.5.0
+          key: sysTemperature
+          delay: '30'
+          history: 7d
+          trends: 30d
+          units: º
+          tags:
+            - tag: Application
+              value: Chassi
+        - uuid: 27c8a5d330934d10a2527fc1df22e760
+          name: 'Uptime da OLT'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.2.1.1.3.0
+          key: sysUpTimeInstance
+          delay: '30'
+          history: 7d
+          trends: 30d
+          units: uptime
+          preprocessing:
+            - type: MULTIPLIER
+              parameters:
+                - '0.01'
+          tags:
+            - tag: Application
+              value: Chassi
+      discovery_rules:
+        - uuid: 362872d18e214b15b7b75ce7997dd52d
+          name: 'Descoberta de Cards'
+          type: SNMP_AGENT
+          snmp_oid: 'discovery[{#CARD},.1.3.6.1.4.1.5875.800.3.101.1.1.1,{#CARDTYPE},.1.3.6.1.4.1.5875.800.3.9.2.1.1.2,{#CARDMENUTIL},.1.3.6.1.4.1.5875.800.3.9.2.1.1.9,{#CARDCPUULTIL},.1.3.6.1.4.1.5875.800.3.9.2.1.1.8]'
+          key: cardInfoEntry
+          delay: 1d
+          filter:
+            conditions:
+              - macro: '{#CARDTYPE}'
+                value: (527|550)
+                formulaid: C
+              - macro: '{#CARDCPUULTIL}'
+                value: '[1-9]'
+                formulaid: A
+              - macro: '{#CARDMENUTIL}'
+                value: '[1-9]'
+                formulaid: B
+          item_prototypes:
+            - uuid: f0f858c64b7a48618ed237bb7641a7af
+              name: 'cardAvaliablePorts [{#CARD}]'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.5875.800.3.9.2.1.1.7.{#SNMPINDEX}'
+              key: 'cardAvaliablePorts[{#CARD}]'
+              delay: '300'
+              history: 7d
+              trends: 30d
+              tags:
+                - tag: Application
+                  value: 'Portas disponiveis no Card'
+            - uuid: ea99d564a57e42b2a1680bb4e6cb9021
+              name: 'cardCpuUtil [{#CARD}]'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.5875.800.3.9.2.1.1.8.{#SNMPINDEX}'
+              key: 'cardCpuUtil[{#CARD}]'
+              delay: '60'
+              history: 7d
+              trends: 30d
+              units: '%'
+              preprocessing:
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.01'
+              tags:
+                - tag: Application
+                  value: 'CPU por Card'
+            - uuid: 7a37af3c324a47098f3a5729a7194c5e
+              name: 'cardHardwareVersion [{#CARD}]'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.5875.800.3.9.2.1.1.3.{#SNMPINDEX}'
+              key: 'cardHardwareVersion[{#CARD}]'
+              delay: '300'
+              history: 7d
+              trends: '0'
+              value_type: CHAR
+              tags:
+                - tag: Application
+                  value: 'Versao de Hardware por Card'
+            - uuid: d66d46235f40412bb0bcc43609bc6f87
+              name: 'cardMenUtil [{#CARD}]'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.5875.800.3.9.2.1.1.9.{#SNMPINDEX}'
+              key: 'cardMenUtil[{#CARD}]'
+              delay: '60'
+              history: 7d
+              trends: 30d
+              units: '%'
+              preprocessing:
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.01'
+              tags:
+                - tag: Application
+                  value: 'Memoria por Card'
+            - uuid: 610cd8172a06428fa490804016e88751
+              name: 'cardNumOfPorts [{#CARD}]'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.5875.800.3.9.2.1.1.6.{#SNMPINDEX}'
+              key: 'cardNumOfPorts[{#CARD}]'
+              delay: '300'
+              history: 7d
+              trends: 30d
+              tags:
+                - tag: Application
+                  value: 'Total de Portas por Card'
+            - uuid: b363574a3d9b4f71b66976900f21559c
+              name: 'cardSoftwareVersion [{#CARD}]'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.5875.800.3.9.2.1.1.4.{#SNMPINDEX}'
+              key: 'cardSoftwareVersion[{#CARD}]'
+              delay: '300'
+              history: 30d
+              trends: '0'
+              value_type: CHAR
+              tags:
+                - tag: Application
+                  value: 'Versao de Software por Card'
+            - uuid: 39ed305af05f4b4ca56b376557ed7c0e
+              name: 'cardStatus [{#CARD}]'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.5875.800.3.9.2.1.1.5.{#SNMPINDEX}'
+              key: 'cardStatus[{#CARD}]'
+              delay: '300'
+              history: 7d
+              trends: 30d
+              tags:
+                - tag: Application
+                  value: 'Status por Card'
+            - uuid: 084839dc0a6547829f1d21f4484afac1
+              name: 'cardType [{#CARD}]'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.5875.800.3.9.2.1.1.2.{#SNMPINDEX}'
+              key: 'cardType[{#CARD}]'
+              delay: '300'
+              history: 7d
+              trends: 30d
+              valuemap:
+                name: cardType
+              tags:
+                - tag: Application
+                  value: 'Tipo por Card'
+            - uuid: 20960b15337b4fcda581c82581866dbd
+              name: 'slotIndex [{#CARD}]'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.5875.800.3.101.1.1.1.{#SNMPINDEX}'
+              key: 'slotIndex[{#CARD}]'
+              delay: '300'
+              history: 7d
+              trends: 30d
+              tags:
+                - tag: Application
+                  value: 'Index por Card'
+        - uuid: feeef4effcc649aca3bc21fbebab18ca
+          name: 'Descoberta de CPU e Memoria'
+          type: SNMP_AGENT
+          snmp_oid: 'discovery[{#MGRCARDTYPE},.1.3.6.1.4.1.5875.800.3.9.8.1.1.1,{#CARDTYPEMGR},.1.3.6.1.4.1.5875.800.3.9.8.1.1.1,{#MGRCARDWORKSTATUS},.1.3.6.1.4.1.5875.800.3.9.8.1.1.4]'
+          key: mgrCardType
+          delay: 1d
+          filter:
+            conditions:
+              - macro: '{#CARDTYPEMGR}'
+                value: (355|374|365)
+                formulaid: A
+              - macro: '{#MGRCARDWORKSTATUS}'
+                value: (1)
+                formulaid: B
+          item_prototypes:
+            - uuid: baff6d6639524dc489f3a61ac484f365
+              name: mgrCardCpuUtil
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.5875.800.3.9.8.1.1.5.{#SNMPINDEX}'
+              key: 'mgrCardCpuUtil[{#MGRCARDTYPE}]'
+              units: '%'
+              preprocessing:
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.01'
+              tags:
+                - tag: 'Uso de CPU'
+            - uuid: c1e800689fcd4f8cada610e99479fbe9
+              name: mgrCardMemUtil
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.5875.800.3.9.8.1.1.5.{#SNMPINDEX}'
+              key: 'mgrCardMemUtil[{#MGRCARDTYPE}]'
+              units: '%'
+              preprocessing:
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.01'
+              tags:
+                - tag: 'Uso de Memoria'
+            - uuid: 3522d7641102486d9594fd2d04848d6d
+              name: mgrCardType
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.5875.800.3.9.8.1.1.1.{#SNMPINDEX}'
+              key: 'mgrCardType[{#MGRCARDTYPE}]'
+              delay: 5m
+              valuemap:
+                name: mgrCardType
+              tags:
+                - tag: 'Tipo de Card'
+        - uuid: f3e761e3d46349869a6b2f07dfc33abe
+          name: 'Descoberta de Interfaces Gpon'
+          type: SNMP_AGENT
+          snmp_oid: 'discovery[{#OLTPONDESC},.1.3.6.1.4.1.5875.800.3.9.3.4.1.3]'
+          key: oltPonDesc
+          delay: 1d
+          item_prototypes:
+            - uuid: 3a9b4ddfb79e4fdf95fee397a57ed2c8
+              name: 'oltPonAuthOnuNum [{#OLTPONDESC}]'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.5875.800.3.9.3.4.1.12.{#SNMPINDEX}'
+              key: 'oltPonAuthOnuNum[{#OLTPONDESC}]'
+              delay: '300'
+              history: 7d
+              trends: 30d
+              description: 'The current operational state of the interface.'
+              tags:
+                - tag: Application
+                  value: 'Porta Autorizadas'
+      macros:
+        - macro: '{$PASSOLT}'
+          value: zabbix
+        - macro: '{$USEROLT}'
+          value: zabbix
+      valuemaps:
+        - uuid: 359c2fc356b84b368bbdde158456f853
+          name: cardType
+          mappings:
+            - value: '415'
+              newvalue: HU1A
+            - value: '527'
+              newvalue: GC8B
+            - value: '550'
+              newvalue: GCOB
+        - uuid: a13be02f5cf943648d66d7b0b397daee
+          name: fanAlarmStatus
+          mappings:
+            - value: '1'
+              newvalue: normal
+            - value: '2'
+              newvalue: stop
+            - value: '3'
+              newvalue: abnormity
+            - value: '4'
+              newvalue: nonChecking
+        - uuid: 9218de19f0cb4b79ad6b0d1439351a6c
+          name: mgrCardType
+          mappings:
+            - value: '355'
+              newvalue: HSWA
+            - value: '374'
+              newvalue: HSUB
+            - value: '365'
+              newvalue: WSWD
+        - uuid: 037942800119418292e63a879cc10a2f
+          name: 'Service state'
+          mappings:
+            - value: '0'
+              newvalue: Down
+            - value: '1'
+              newvalue: Up
+        - uuid: 0c8186381f9a477ba41018af3aa57ef4
+          name: 'SNMP interface status (ifAdminStatus)'
+          mappings:
+            - value: '1'
+              newvalue: up
+            - value: '2'
+              newvalue: down
+            - value: '3'
+              newvalue: testing
+        - uuid: 9cda381374a243c99b6a5a79c997e045
+          name: 'SNMP interface status (ifOperStatus)'
+          mappings:
+            - value: '1'
+              newvalue: up
+            - value: '2'
+              newvalue: down
+            - value: '3'
+              newvalue: testing
+            - value: '4'
+              newvalue: unknown
+            - value: '5'
+              newvalue: dormant
+            - value: '6'
+              newvalue: notPresent
+            - value: '7'
+              newvalue: lowerLayerDown
+  graphs:
+    - uuid: 6b411daf86ff46cc9d88fd3b32487002
+      name: 'Temperatura OLT'
+      graph_items:
+        - color: FFA500
+          item:
+            host: 'Template OLT Fiberhome - BEE'
+            key: sysTemperature

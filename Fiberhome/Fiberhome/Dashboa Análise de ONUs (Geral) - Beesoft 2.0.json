@@ -1,0 +1,3554 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_MYSQL-BEESOFT",
+      "label": "MySQL-Beesoft",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "mysql",
+      "pluginName": "MySQL"
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "barchart",
+      "name": "Bar chart",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "bargauge",
+      "name": "Bar gauge",
+      "version": ""
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.1.2"
+    },
+    {
+      "type": "datasource",
+      "id": "mysql",
+      "name": "MySQL",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "text",
+      "name": "Text",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "timeseries",
+      "name": "Time series",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL-BEESOFT}"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 2,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "<center><img style=\" width=\"80\" height=\"80\" \" src=\"https://beesolutions.com.br/static/home/images/bee/so-logo.png\" ></center>\n<p>\n<center><h5> BEE SOLUTIONS </h5></center>",
+        "mode": "markdown"
+      },
+      "pluginVersion": "10.1.2",
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL-BEESOFT}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#1b3651",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 5,
+        "x": 2,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "10.1.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL-BEESOFT}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "select count(onuid) as 'Total Autorizadas' from ftth_onu onu\r\ninner join ftth_olt olt on (onu.olt_fk_id = olt.id)\r\nwhere olt.nome like '%$olt%' and onu.status in ('0','1','2','3','4','online','offline','working','UP','DOWN','LOS','DyingGasp','LOS','offLine');",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL-BEESOFT}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 5,
+        "x": 7,
+        "y": 0
+      },
+      "id": 3,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "10.1.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL-BEESOFT}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "select count(onuid) as 'Total Onlines' from ftth_onu onu\r\ninner join ftth_olt olt on (onu.olt_fk_id = olt.id)\r\nwhere olt.nome like '%$olt%' and onu.status in ('1','online','working','UP');",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL-BEESOFT}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#4d4d4d",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 12,
+        "y": 0
+      },
+      "id": 5,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "10.1.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL-BEESOFT}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "select count(onuid) 'Total Offlines' from ftth_onu onu\r\ninner join ftth_olt olt on (onu.olt_fk_id = olt.id)\r\nwhere olt.nome like '%$olt%' and onu.status in ('2','offline','DOWN','OffLine');",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL-BEESOFT}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-red",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 16,
+        "y": 0
+      },
+      "id": 6,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "10.1.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL-BEESOFT}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "select count(onuid) as 'Total Rompimento' from ftth_onu onu\r\ninner join ftth_olt olt on (onu.olt_fk_id = olt.id)\r\nwhere olt.nome like \"%$olt%\" and (onu.status in ('0','LOS','los') or (onu.status in ('offline') and onu.reason in ('LOSi/LOBi','los')));",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL-BEESOFT}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-orange",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 20,
+        "y": 0
+      },
+      "id": 7,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "10.1.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL-BEESOFT}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "select count(onuid) as 'Falta de Energia' from ftth_onu onu\r\ninner join ftth_olt olt on (onu.olt_fk_id = olt.id)\r\nwhere olt.nome like '%$olt%' and (onu.status in ('4','dying') or (onu.status in ('offline') and onu.reason in ('dying-gasp','DyingGasp')));",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL-BEESOFT}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "gauge"
+            },
+            "filterable": true,
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Porta"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "auto"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 105
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "OLT"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "auto"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 148
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 4
+      },
+      "id": 13,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "enablePagination": true,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "10.1.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL-BEESOFT}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "select olt.nome as OLT, pon as 'Porta',count(onuid) as 'Autorizadas',\r\ncount(case when (status like '%online%' or status like '%working%') then onuid end) as 'Onlines',\r\ncount(case when status like '%offline%' then onuid end) as 'Offlines',\r\ncount(case when status like '%offline%' and reason like '%dying%' then onuid end) as 'Off p/ falta de energia',\r\ncount(case when status like '%offline%' and reason like '%los%' then onuid end) as 'Off p/ fibra rompida',\r\ncount(case when status like '%offline%' and reason like '%cmd%' then onuid end) as 'Off p/ cmd de reiniciar',\r\ncount(case when status like '%offline%' and reason like 'desconhecido' then onuid end) as 'Off p/ desconhecido'\r\nfrom ftth_onu onu\r\ninner join ftth_olt olt on (onu.olt_fk_id = olt.id)\r\nwhere olt.nome in (\"$olt\") group by pon order by\r\n    SUBSTRING_INDEX(pon, ' ', -3) + 0,\r\n    SUBSTRING_INDEX(SUBSTRING_INDEX(pon, ' ', -2), '/', -2) + 0,\r\n    SUBSTRING_INDEX(SUBSTRING_INDEX(pon, ' ', -1), '/', -1) + 0;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Visão geral por Porta PON (Selecione uma OLT)",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL-BEESOFT}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": true,
+            "inspect": false
+          },
+          "mappings": [],
+          "noValue": "-",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ONURX"
+            },
+            "properties": [
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "dark-red",
+                      "value": null
+                    },
+                    {
+                      "color": "dark-orange",
+                      "value": -30
+                    },
+                    {
+                      "color": "dark-green",
+                      "value": -25
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "gradient",
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 83
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "STATUS"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "gradient",
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "0": {
+                        "color": "dark-red",
+                        "index": 2,
+                        "text": "Rompimento"
+                      },
+                      "1": {
+                        "color": "dark-green",
+                        "index": 3,
+                        "text": "Online"
+                      },
+                      "2": {
+                        "color": "dark-red",
+                        "index": 4,
+                        "text": "Offline"
+                      },
+                      "3": {
+                        "color": "#808080",
+                        "index": 5,
+                        "text": "Desconhecido"
+                      },
+                      "4": {
+                        "color": "dark-orange",
+                        "index": 6,
+                        "text": "Energia"
+                      },
+                      "offline": {
+                        "color": "dark-red",
+                        "index": 1,
+                        "text": "Offline"
+                      },
+                      "online": {
+                        "color": "dark-green",
+                        "index": 0,
+                        "text": "Online"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 98
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "OLTRX"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "gradient",
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "dark-red",
+                      "value": null
+                    },
+                    {
+                      "color": "dark-orange",
+                      "value": -30
+                    },
+                    {
+                      "color": "dark-green",
+                      "value": -25
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 82
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ONUID"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 81
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "DISTANCIA"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "lengthm"
+              },
+              {
+                "id": "custom.width",
+                "value": 111
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ULT.MOT.OFF"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "cmd-reset": {
+                        "color": "#5a6763",
+                        "index": 0,
+                        "text": "Reiniciado via OLT"
+                      },
+                      "dying-gasp": {
+                        "color": "dark-orange",
+                        "index": 2,
+                        "text": "Falta de Energia"
+                      },
+                      "los": {
+                        "color": "dark-red",
+                        "index": 3,
+                        "text": "Rompimento"
+                      },
+                      "unknown": {
+                        "color": "#808080",
+                        "index": 1,
+                        "text": "Desconhecido"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "gradient",
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "noValue",
+                "value": "-"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "DESCRIÇÃO"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 182
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ONUTX"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 84
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "PON"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 91
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "OLT"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 145
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 24,
+        "x": 0,
+        "y": 14
+      },
+      "id": 8,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "enablePagination": true,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "10.1.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL-BEESOFT}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "\tSELECT \r\n\tolt.nome AS OLT,\r\n\tonuid AS ONUID,\r\n\tpon AS PON,\r\n\tserial AS SN,\r\n\tdescription AS \"DESCRIÇÃO\",\r\n\tonurx AS ONURX,\r\n\tonutx AS ONUTX,\r\n\toltrx AS OLTRX,\r\n  fo.distance AS 'DISTANCIA',\r\n  fo.model AS MODELO,\r\n  fo.status AS STATUS,\r\n\tfo.reason AS 'ULT.MOT.OFF',\r\n\tDATE_FORMAT(fo.last_uptime, '%d-%m-%Y %H:%i:%s') AS 'ULT.VEZ.ONLINE',\r\n\tDATE_FORMAT(fo.last_downtime, '%d-%m-%Y %H:%i:%s') AS 'ULT.VEZ.OFFLINE',\r\n\tDATE_FORMAT(CONVERT_TZ(fo.timestamp, '+00:00', '-03:00'), '%d-%m-%Y %H:%i:%s') AS 'ULT.VERIFICACAO'\r\n\tFROM ftth_onu AS fo\r\n\tLEFT JOIN (\r\n\t\tSELECT foh.onu_fk_id, onurx, onutx, oltrx\r\n\t\tFROM ftth_onuhistory AS foh\r\n\t\tINNER JOIN (\r\n\t\t\tSELECT onu_fk_id, MAX(timestamp) AS max_timestamp\r\n\t\t\tFROM ftth_onuhistory\r\n\t\t\tGROUP BY onu_fk_id\r\n\t\t) AS foh_max ON foh.onu_fk_id = foh_max.onu_fk_id AND foh.timestamp = foh_max.max_timestamp\r\n\t) AS h ON fo.id = h.onu_fk_id inner join ftth_olt olt on (fo.olt_fk_id = olt.id) WHERE olt.nome LIKE \"%$olt%\" AND fo.status in ($onu_status)\r\n\tAND (fo.reason in ($reason) or fo.reason is null)\r\n\tORDER BY\r\n    SUBSTRING_INDEX(pon, ' ', -3) + 0,\r\n    SUBSTRING_INDEX(SUBSTRING_INDEX(pon, ' ', -2), '/', -2) + 0,\r\n    SUBSTRING_INDEX(SUBSTRING_INDEX(pon, ' ', -1), '/', -1) + 0;;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Painel de Análise ONU - Beesoft",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL-BEESOFT}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": true,
+            "inspect": false
+          },
+          "mappings": [],
+          "noValue": "-",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "TOTAL"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "gauge",
+                  "valueDisplayMode": "text"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "dark-green",
+                      "value": null
+                    },
+                    {
+                      "color": "#EAB839",
+                      "value": 2
+                    },
+                    {
+                      "color": "dark-orange",
+                      "value": 3
+                    },
+                    {
+                      "color": "dark-red",
+                      "value": 5
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 5,
+        "x": 0,
+        "y": 25
+      },
+      "id": 18,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "enablePagination": true,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "10.1.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL-BEESOFT}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "select serial AS SERIAL,count(id) TOTAL from ftth_onu group by serial having count(serial) > 1 order by total desc;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Seriais Duplicados - Consolidado",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL-BEESOFT}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": true,
+            "inspect": false
+          },
+          "mappings": [],
+          "noValue": "-",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ONURX"
+            },
+            "properties": [
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "dark-red",
+                      "value": null
+                    },
+                    {
+                      "color": "dark-orange",
+                      "value": -30
+                    },
+                    {
+                      "color": "dark-green",
+                      "value": -25
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "gradient",
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 83
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "STATUS"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "gradient",
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "0": {
+                        "color": "dark-red",
+                        "index": 2,
+                        "text": "Rompimento"
+                      },
+                      "1": {
+                        "color": "dark-green",
+                        "index": 3,
+                        "text": "Online"
+                      },
+                      "2": {
+                        "color": "dark-red",
+                        "index": 4,
+                        "text": "Offline"
+                      },
+                      "3": {
+                        "color": "#808080",
+                        "index": 5,
+                        "text": "Desconhecido"
+                      },
+                      "4": {
+                        "color": "dark-orange",
+                        "index": 6,
+                        "text": "Energia"
+                      },
+                      "offline": {
+                        "color": "dark-red",
+                        "index": 1,
+                        "text": "Offline"
+                      },
+                      "online": {
+                        "color": "dark-green",
+                        "index": 0,
+                        "text": "Online"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 98
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "OLTRX"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "gradient",
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "dark-red",
+                      "value": null
+                    },
+                    {
+                      "color": "dark-orange",
+                      "value": -30
+                    },
+                    {
+                      "color": "dark-green",
+                      "value": -25
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 82
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ONUID"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 81
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "DISTANCIA"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "lengthm"
+              },
+              {
+                "id": "custom.width",
+                "value": 111
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ULT.MOT.OFF"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "cmd-reset": {
+                        "color": "#5a6763",
+                        "index": 0,
+                        "text": "Reiniciado via OLT"
+                      },
+                      "dying-gasp": {
+                        "color": "dark-orange",
+                        "index": 2,
+                        "text": "Falta de Energia"
+                      },
+                      "los": {
+                        "color": "dark-red",
+                        "index": 3,
+                        "text": "Rompimento"
+                      },
+                      "unknown": {
+                        "color": "#808080",
+                        "index": 1,
+                        "text": "Desconhecido"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "gradient",
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "noValue",
+                "value": "-"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "DESCRIÇÃO"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 182
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ONUTX"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 84
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "PON"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 70
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "OLT"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 169
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 19,
+        "x": 5,
+        "y": 25
+      },
+      "id": 19,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "enablePagination": true,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "10.1.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL-BEESOFT}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "select \r\nolt.nome AS OLT,\r\nonuid AS ONUID,\r\npon AS PON,\r\nserial AS SN,\r\ndescription AS 'DESCRIÇÃO',\r\ndistance AS 'DISTANCIA',\r\nmodel AS MODELO,\r\nstatus AS STATUS,\r\nreason AS 'ULT.MOT.OFF',\r\nDATE_FORMAT(last_uptime, '%d-%m-%Y %H:%i:%s') AS 'ULT.VEZ.ONLINE',\r\nDATE_FORMAT(last_downtime, '%d-%m-%Y %H:%i:%s') AS 'ULT.VEZ.OFFLINE',\r\nDATE_FORMAT(CONVERT_TZ(timestamp, '+00:00', '-03:00'), '%d-%m-%Y %H:%i:%s') AS 'ULT.VERIFICACAO'\r\nfrom ftth_onu onu\r\nINNER JOIN ftth_olt olt ON (olt.id = onu.olt_fk_id)\r\nwhere serial in (select serial from ftth_onu group by serial having count(serial) > 1) order by serial desc;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Análise de Duplicados - Beesoft",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL-BEESOFT}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "displayName": "Análise de ONU - SN ($serial)",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#103843",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 24,
+        "x": 0,
+        "y": 35
+      },
+      "id": 16,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "name"
+      },
+      "pluginVersion": "10.1.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL-BEESOFT}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT onuid FROM ftth_onu limit 1;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL-BEESOFT}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 4,
+        "x": 0,
+        "y": 37
+      },
+      "id": 15,
+      "options": {
+        "displayMode": "gradient",
+        "minVizHeight": 10,
+        "minVizWidth": 0,
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/.*/",
+          "values": false
+        },
+        "showUnfilled": true,
+        "valueMode": "color"
+      },
+      "pluginVersion": "10.1.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL-BEESOFT}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "select olt.nome AS OLT,onuid AS ONUID,pon AS PON,serial AS SN,model AS MODELO,status AS STATUS,distance AS DISTANCIA,reason AS 'ULT.MOT.OFF',onu.timestamp AS 'ULT.VERIFICAÇÃO'\r\nFROM ftth_onu onu\r\nINNER JOIN ftth_olt olt on (onu.olt_fk_id = olt.id)\r\nWHERE serial in (\"$serial\") AND olt.nome like '%$olt%';",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Informações da ONU - SN ($serial)",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "OLT": true
+            },
+            "indexByName": {},
+            "renameByName": {}
+          }
+        }
+      ],
+      "type": "bargauge"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL-BEESOFT}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 10,
+        "x": 4,
+        "y": 37
+      },
+      "id": 9,
+      "options": {
+        "barRadius": 0,
+        "barWidth": 0.97,
+        "fullHighlight": false,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "orientation": "auto",
+        "showValue": "auto",
+        "stacking": "none",
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        },
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
+      },
+      "pluginVersion": "9.5.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL-BEESOFT}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT\r\n  t1.timestamp,\r\n  t1.onurx AS \"$serial-OnuRx\",\r\n  t2.onutx AS \"$serial-OnuTx\"\r\nFROM (\r\n  SELECT foh.timestamp, onurx\r\n  FROM ftth_onuhistory foh\r\n  INNER JOIN ftth_onu fo ON (fo.id = foh.onu_fk_id)\r\n  INNER JOIN ftth_olt olt ON (olt.id = foh.olt_fk_id)\r\n  WHERE serial = \"$serial\" AND olt.nome like '%$olt%'\r\n) t1\r\nJOIN (\r\n  SELECT foh.timestamp, onutx\r\n  FROM ftth_onuhistory foh\r\n  INNER JOIN ftth_onu fo ON (fo.id = foh.onu_fk_id)\r\n  INNER JOIN ftth_olt olt ON (olt.id = foh.olt_fk_id)\r\n  WHERE serial = \"$serial\" AND olt.nome like '%$olt%'\r\n) t2 ON t1.timestamp = t2.timestamp WHERE $__timeFilter(t1.timestamp);\r\n",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Verificação de Historico de Sinal por SN - ($serial)",
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL-BEESOFT}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 30,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "48575443152D8A9F-OnuRx"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#47adb5",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "48575443152D8A9F-OnuTx"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 10,
+        "x": 14,
+        "y": 37
+      },
+      "id": 14,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.3.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL-BEESOFT}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT\r\n  t1.timestamp,\r\n  t1.onurx AS \"$serial-OnuRx\",\r\n  t2.onutx AS \"$serial-OnuTx\"\r\nFROM (\r\n  SELECT foh.timestamp, onurx\r\n  FROM ftth_onuhistory foh\r\n  INNER JOIN ftth_onu fo ON (fo.id = foh.onu_fk_id)\r\n  INNER JOIN ftth_olt olt ON (olt.id = foh.olt_fk_id)\r\n  WHERE serial = \"$serial\" AND olt.nome like '%$olt%'\r\n) t1\r\nJOIN (\r\n  SELECT foh.timestamp, onutx\r\n  FROM ftth_onuhistory foh\r\n  INNER JOIN ftth_onu fo ON (fo.id = foh.onu_fk_id)\r\n  INNER JOIN ftth_olt olt ON (olt.id = foh.olt_fk_id)\r\n  WHERE serial = \"$serial\" AND olt.nome like '%$olt%'\r\n) t2 ON t1.timestamp = t2.timestamp;\r\n",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Verificação de Historico de Sinal por SN - ($serial)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL-BEESOFT}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": true,
+            "inspect": false
+          },
+          "mappings": [],
+          "noValue": "-",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "STATUS"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "0": {
+                        "color": "dark-red",
+                        "index": 0,
+                        "text": "Fibra Rompida"
+                      },
+                      "1": {
+                        "color": "dark-green",
+                        "index": 1,
+                        "text": "Online"
+                      },
+                      "2": {
+                        "color": "#384f5a",
+                        "index": 2,
+                        "text": "Offline"
+                      },
+                      "3": {
+                        "color": "green",
+                        "index": 3,
+                        "text": "Online Sem Dados"
+                      },
+                      "4": {
+                        "color": "dark-orange",
+                        "index": 4,
+                        "text": "Falta de Energia"
+                      },
+                      "LOSi/LOBi": {
+                        "color": "dark-red",
+                        "index": 8,
+                        "text": "Fiibra Rompida"
+                      },
+                      "dying-gasp": {
+                        "color": "dark-orange",
+                        "index": 7,
+                        "text": "Falta de Energia"
+                      },
+                      "offline": {
+                        "color": "dark-red",
+                        "index": 6,
+                        "text": "Offline"
+                      },
+                      "online": {
+                        "color": "dark-green",
+                        "index": 5,
+                        "text": "Online"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "basic",
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 91
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ONURX"
+            },
+            "properties": [
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "dark-red",
+                      "value": null
+                    },
+                    {
+                      "color": "dark-orange",
+                      "value": -30
+                    },
+                    {
+                      "color": "dark-green",
+                      "value": -25
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "basic",
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 83
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "DISTANCIA"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "lengthm"
+              },
+              {
+                "id": "custom.width",
+                "value": 108
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ULT.MOT.OFF"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "attenuation": {
+                        "color": "dark-yellow",
+                        "index": 4,
+                        "text": "Atenuação"
+                      },
+                      "cmd-reset": {
+                        "color": "#5a6763",
+                        "index": 0,
+                        "text": "Reiniciado via OLT"
+                      },
+                      "dying-gasp": {
+                        "color": "dark-orange",
+                        "index": 2,
+                        "text": "Falta de Energia"
+                      },
+                      "los": {
+                        "color": "dark-red",
+                        "index": 3,
+                        "text": "Rompimento"
+                      },
+                      "unknown": {
+                        "color": "#808080",
+                        "index": 1,
+                        "text": "Desconhecido"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "gradient",
+                  "type": "color-background"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ONUID"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 78
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "PON"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 64
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "SN"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 173
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "DESCRIÇÃO"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 177
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "OLTTX"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 99
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ONUTX"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 84
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "OLTRX"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 78
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "OLT"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 145
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "MODELO"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 108
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "VERSAO"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 132
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "DESCRIÇÃO"
+            },
+            "properties": [
+              {
+                "id": "noValue",
+                "value": "-"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "DISTANCIA"
+            },
+            "properties": [
+              {
+                "id": "noValue",
+                "value": "-"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 45
+      },
+      "id": 10,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "enablePagination": true,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "10.1.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL-BEESOFT}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT\r\n  olt.nome AS OLT,\r\n  fo.onuid AS ONUID,\r\n  fo.pon AS PON,\r\n  fo.serial AS SN,\r\n  fo.description AS \"DESCRIÇÃO\",\r\n  foh.onurx AS ONURX,\r\n  foh.oltrx AS OLTRX,\r\n  foh.onutx AS ONUTX,\r\n  fo.distance AS 'DISTANCIA',\r\n  fo.model AS MODELO,\r\n  fo.version AS VERSAO,\r\n  fo.status AS STATUS,\r\n  fo.reason AS 'ULT.MOT.OFF',\r\n  DATE_FORMAT(fo.last_uptime, '%d-%m-%Y %H:%i:%s') AS 'ULT.VEZ.ONLINE',\r\n  DATE_FORMAT(fo.last_downtime, '%d-%m-%Y %H:%i:%s') AS 'ULT.VEZ.OFFLINE',\r\n  DATE_FORMAT(CONVERT_TZ(fo.timestamp, '+00:00', '-03:00'), '%d-%m-%Y %H:%i:%s') AS 'ULT.VERIFICACAO'\r\nFROM\r\n  ftth_onu AS fo\r\n  INNER JOIN ftth_olt AS olt ON (fo.olt_fk_id = olt.id)\r\n  LEFT JOIN (\r\n    SELECT\r\n      onu_fk_id,\r\n      onurx,\r\n      oltrx,\r\n      onutx\r\n    FROM\r\n      ftth_onuhistory\r\n    WHERE\r\n      timestamp = (\r\n        SELECT\r\n          MAX(timestamp)\r\n        FROM\r\n          ftth_onuhistory AS foh_inner\r\n        WHERE\r\n          foh_inner.onu_fk_id = ftth_onuhistory.onu_fk_id\r\n      )\r\n  ) AS foh ON fo.id = foh.onu_fk_id\r\nWHERE\r\n  (foh.onurx BETWEEN -39 AND -30 AND onurx != -40)\r\n  AND foh.onutx IS NOT NULL\r\n  AND olt.nome LIKE '%$olt%'\r\n  AND olt.nome IN (\r\n    SELECT\r\n      nome\r\n    FROM\r\n      ftth_olt\r\n    WHERE\r\n      nome LIKE '%$olt%'\r\n  )\r\nORDER BY\r\n  SUBSTRING_INDEX(pon, ' ', -3) + 0,\r\n  SUBSTRING_INDEX(SUBSTRING_INDEX(pon, ' ', -2), '/', -2) + 0,\r\n  SUBSTRING_INDEX(SUBSTRING_INDEX(pon, ' ', -1), '/', -1) + 0;\r\n",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Painel de Análise ONU (<=-30) - Sinal ruim",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL-BEESOFT}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": true,
+            "inspect": false
+          },
+          "mappings": [],
+          "noValue": "-",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "STATUS"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "0": {
+                        "color": "dark-red",
+                        "index": 2,
+                        "text": "Rompimento"
+                      },
+                      "1": {
+                        "color": "dark-green",
+                        "index": 3,
+                        "text": "Online"
+                      },
+                      "2": {
+                        "color": "dark-red",
+                        "index": 4,
+                        "text": "Offline"
+                      },
+                      "3": {
+                        "color": "#808080",
+                        "index": 5,
+                        "text": "Desconhecido"
+                      },
+                      "4": {
+                        "color": "dark-orange",
+                        "index": 6,
+                        "text": "Energia"
+                      },
+                      "offline": {
+                        "color": "dark-red",
+                        "index": 1,
+                        "text": "Offline"
+                      },
+                      "online": {
+                        "color": "dark-green",
+                        "index": 0,
+                        "text": "Online"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "basic",
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 87
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ONURX"
+            },
+            "properties": [
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "dark-red",
+                      "value": null
+                    },
+                    {
+                      "color": "dark-orange",
+                      "value": -30
+                    },
+                    {
+                      "color": "dark-green",
+                      "value": -25
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "basic",
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 83
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "DISTANCIA"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "lengthm"
+              },
+              {
+                "id": "custom.width",
+                "value": 109
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ULT.MOT.OFF"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "gradient",
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "cmd-reset": {
+                        "color": "#5a6763",
+                        "index": 0,
+                        "text": "Reiniciado via OLT"
+                      },
+                      "dying-gasp": {
+                        "color": "dark-orange",
+                        "index": 2,
+                        "text": "Falta de Energia"
+                      },
+                      "los": {
+                        "color": "dark-red",
+                        "index": 3,
+                        "text": "Rompimento"
+                      },
+                      "unknown": {
+                        "color": "#808080",
+                        "index": 1,
+                        "text": "Desconhecido"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ONUID"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 80
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "PON"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 63
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "SN"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 171
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "DESCRIÇÃO"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 172
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "OLTRX"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 79
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ONUTX"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 82
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "OLT"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 147
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "VERSAO"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 108
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 54
+      },
+      "id": 11,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "enablePagination": true,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "10.1.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL-BEESOFT}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT\r\n  olt.nome AS OLT,\r\n  fo.onuid AS ONUID,\r\n  fo.pon AS PON,\r\n  fo.serial AS SN,\r\n  fo.description AS \"DESCRIÇÃO\",\r\n  foh.onurx AS ONURX,\r\n  foh.oltrx AS OLTRX,\r\n  foh.onutx AS ONUTX,\r\n  fo.distance AS 'DISTANCIA',\r\n  fo.model AS MODELO,\r\n  fo.version AS VERSAO,\r\n  fo.status AS STATUS,\r\n  fo.reason AS 'ULT.MOT.OFF',\r\n  DATE_FORMAT(fo.last_uptime, '%d-%m-%Y %H:%i:%s') AS 'ULT.VEZ.ONLINE',\r\n  DATE_FORMAT(fo.last_downtime, '%d-%m-%Y %H:%i:%s') AS 'ULT.VEZ.OFFLINE',\r\n  DATE_FORMAT(CONVERT_TZ(fo.timestamp, '+00:00', '-03:00'), '%d-%m-%Y %H:%i:%s') AS 'ULT.VERIFICACAO'\r\nFROM\r\n  ftth_onu AS fo\r\n  INNER JOIN ftth_olt AS olt ON (fo.olt_fk_id = olt.id)\r\n  LEFT JOIN (\r\n    SELECT\r\n      onu_fk_id,\r\n      onurx,\r\n      oltrx,\r\n      onutx\r\n    FROM\r\n      ftth_onuhistory\r\n    WHERE\r\n      timestamp = (\r\n        SELECT\r\n          MAX(timestamp)\r\n        FROM\r\n          ftth_onuhistory AS foh_inner\r\n        WHERE\r\n          foh_inner.onu_fk_id = ftth_onuhistory.onu_fk_id\r\n      )\r\n  ) AS foh ON fo.id = foh.onu_fk_id\r\nWHERE\r\n  (foh.onurx BETWEEN -29 AND -27 AND onurx != -40)\r\n  AND foh.onutx IS NOT NULL\r\n  AND olt.nome LIKE '%$olt%'\r\n  AND olt.nome IN (\r\n    SELECT\r\n      nome\r\n    FROM\r\n      ftth_olt\r\n    WHERE\r\n      nome LIKE '%$olt%'\r\n  )\r\nORDER BY\r\n  SUBSTRING_INDEX(pon, ' ', -3) + 0,\r\n  SUBSTRING_INDEX(SUBSTRING_INDEX(pon, ' ', -2), '/', -2) + 0,\r\n  SUBSTRING_INDEX(SUBSTRING_INDEX(pon, ' ', -1), '/', -1) + 0;\r\n",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Painel de Análise ONU (<=-27) - Alerta de sinal",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL-BEESOFT}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": true,
+            "inspect": false
+          },
+          "mappings": [],
+          "noValue": "-",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "STATUS"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "0": {
+                        "color": "dark-red",
+                        "index": 2,
+                        "text": "Rompimento"
+                      },
+                      "1": {
+                        "color": "dark-green",
+                        "index": 3,
+                        "text": "Online"
+                      },
+                      "2": {
+                        "color": "dark-red",
+                        "index": 4,
+                        "text": "Offline"
+                      },
+                      "3": {
+                        "color": "#808080",
+                        "index": 5,
+                        "text": "Desconhecido"
+                      },
+                      "4": {
+                        "color": "dark-orange",
+                        "index": 6,
+                        "text": "Energia"
+                      },
+                      "offline": {
+                        "color": "dark-red",
+                        "index": 1,
+                        "text": "Offline"
+                      },
+                      "online": {
+                        "color": "dark-green",
+                        "index": 0,
+                        "text": "Online"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "basic",
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 88
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ONURX"
+            },
+            "properties": [
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "dark-red",
+                      "value": null
+                    },
+                    {
+                      "color": "dark-orange",
+                      "value": -30
+                    },
+                    {
+                      "color": "dark-green",
+                      "value": -25
+                    },
+                    {
+                      "color": "dark-red",
+                      "value": 0
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "basic",
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "0": {
+                        "color": "dark-red",
+                        "index": 0,
+                        "text": "-40"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 82
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "DISTANCIA"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "lengthm"
+              },
+              {
+                "id": "custom.width",
+                "value": 109
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ULT.MOT.OFF"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "gradient",
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "cmd-reset": {
+                        "color": "#5a6763",
+                        "index": 0,
+                        "text": "Reiniciado via OLT"
+                      },
+                      "dying-gasp": {
+                        "color": "dark-orange",
+                        "index": 2,
+                        "text": "Falta de Energia"
+                      },
+                      "los": {
+                        "color": "dark-red",
+                        "index": 3,
+                        "text": "Rompimento"
+                      },
+                      "unknown": {
+                        "color": "#808080",
+                        "index": 1,
+                        "text": "Desconhecido"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ONUTX"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 84
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "DESCRIÇÃO"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 187
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ONUID"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 84
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "PON"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 66
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "OLTRX"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 78
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "SN"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 161
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "OLT"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 144
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "VERSAO"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 106
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "MODELO"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 128
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 64
+      },
+      "id": 12,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "enablePagination": true,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "10.1.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL-BEESOFT}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT\r\n  olt.nome AS OLT,\r\n  fo.onuid AS ONUID,\r\n  fo.pon AS PON,\r\n  fo.serial AS SN,\r\n  fo.description AS \"DESCRIÇÃO\",\r\n  foh.onurx AS ONURX,\r\n  foh.oltrx AS OLTRX,\r\n  foh.onutx AS ONUTX,\r\n  fo.distance AS 'DISTANCIA',\r\n  fo.model AS MODELO,\r\n  fo.version AS VERSAO,\r\n  fo.status AS STATUS,\r\n  fo.reason AS 'ULT.MOT.OFF',\r\n  DATE_FORMAT(fo.last_uptime, '%d-%m-%Y %H:%i:%s') AS 'ULT.VEZ.ONLINE',\r\n  DATE_FORMAT(fo.last_downtime, '%d-%m-%Y %H:%i:%s') AS 'ULT.VEZ.OFFLINE',\r\n  DATE_FORMAT(CONVERT_TZ(fo.timestamp, '+00:00', '-03:00'), '%d-%m-%Y %H:%i:%s') AS 'ULT.VERIFICACAO'\r\nFROM\r\n  ftth_onu AS fo\r\n  INNER JOIN ftth_olt AS olt ON (fo.olt_fk_id = olt.id)\r\n  LEFT JOIN (\r\n    SELECT\r\n      onu_fk_id,\r\n      onurx,\r\n      oltrx,\r\n      onutx\r\n    FROM\r\n      ftth_onuhistory\r\n    WHERE\r\n      timestamp = (\r\n        SELECT\r\n          MAX(timestamp)\r\n        FROM\r\n          ftth_onuhistory AS foh_inner\r\n        WHERE\r\n          foh_inner.onu_fk_id = ftth_onuhistory.onu_fk_id\r\n      )\r\n  ) AS foh ON fo.id = foh.onu_fk_id\r\nWHERE\r\n  (foh.onurx = -40 or onurx = 0)\r\n  AND foh.onutx IS NOT NULL\r\n  AND olt.nome LIKE '%$olt%'\r\n  AND olt.nome IN (\r\n    SELECT\r\n      nome\r\n    FROM\r\n      ftth_olt\r\n    WHERE\r\n      nome LIKE '%$olt%'\r\n  )\r\nORDER BY\r\n  SUBSTRING_INDEX(pon, ' ', -3) + 0,\r\n  SUBSTRING_INDEX(SUBSTRING_INDEX(pon, ' ', -2), '/', -2) + 0,\r\n  SUBSTRING_INDEX(SUBSTRING_INDEX(pon, ' ', -1), '/', -1) + 0;\r\n",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Painel de Análise ONU (<=-40) - Sem sinal",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL-BEESOFT}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": true,
+            "inspect": false
+          },
+          "mappings": [],
+          "noValue": "-",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ONURX"
+            },
+            "properties": [
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "dark-red",
+                      "value": null
+                    },
+                    {
+                      "color": "dark-orange",
+                      "value": -30
+                    },
+                    {
+                      "color": "dark-green",
+                      "value": -25
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "gradient",
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 84
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "STATUS"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "gradient",
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "0": {
+                        "color": "dark-red",
+                        "index": 2,
+                        "text": "Rompimento"
+                      },
+                      "1": {
+                        "color": "dark-green",
+                        "index": 3,
+                        "text": "Online"
+                      },
+                      "2": {
+                        "color": "dark-red",
+                        "index": 4,
+                        "text": "Offline"
+                      },
+                      "3": {
+                        "color": "#808080",
+                        "index": 5,
+                        "text": "Desconhecido"
+                      },
+                      "4": {
+                        "color": "dark-orange",
+                        "index": 6,
+                        "text": "Energia"
+                      },
+                      "offline": {
+                        "color": "dark-red",
+                        "index": 1,
+                        "text": "Offline"
+                      },
+                      "online": {
+                        "color": "dark-green",
+                        "index": 0,
+                        "text": "Online"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 93
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "OLTRX"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "gradient",
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "dark-red",
+                      "value": null
+                    },
+                    {
+                      "color": "dark-orange",
+                      "value": -30
+                    },
+                    {
+                      "color": "dark-green",
+                      "value": -25
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 81
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ONUID"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 78
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "DISTANCIA"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "lengthm"
+              },
+              {
+                "id": "custom.width",
+                "value": 110
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ULT.MOT.OFF"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "attenuation": {
+                        "color": "dark-yellow",
+                        "index": 4,
+                        "text": "Atenuação"
+                      },
+                      "cmd-reset": {
+                        "color": "#5a6763",
+                        "index": 0,
+                        "text": "Reiniciado via OLT"
+                      },
+                      "dying-gasp": {
+                        "color": "dark-orange",
+                        "index": 2,
+                        "text": "Falta de Energia"
+                      },
+                      "los": {
+                        "color": "dark-red",
+                        "index": 3,
+                        "text": "Rompimento"
+                      },
+                      "unknown": {
+                        "color": "#808080",
+                        "index": 1,
+                        "text": "Desconhecido"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "gradient",
+                  "type": "color-background"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "DESCRIÇÃO"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 196
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ONUTX"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 84
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "PON"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 70
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "SN"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 168
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "OLT"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 148
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "DESCRIÇÃO"
+            },
+            "properties": [
+              {
+                "id": "noValue",
+                "value": "-"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "DISTANCIA"
+            },
+            "properties": [
+              {
+                "id": "noValue",
+                "value": "-"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 23,
+        "w": 24,
+        "x": 0,
+        "y": 74
+      },
+      "id": 17,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "enablePagination": true,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "10.1.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL-BEESOFT}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "\tSELECT olt.nome AS OLT,\r\n\tfo.onuid AS ONUID,\r\n\tfo.pon AS PON, serial AS SN,\r\n\tfo.description AS \"DESCRIÇÃO\",\r\n\tonurx AS ONURX,\r\n\tonutx AS ONUTX,\r\n\toltrx AS OLTRX,\r\n\tfo.distance AS DISTANCIA,\r\n\tfo.model AS MODELO,\r\n\tfo.status AS STATUS,\r\n\tfo.reason AS 'ULT.MOT.OFF',\r\n\tDATE_FORMAT(fo.last_uptime, '%d-%m-%Y %H:%i:%s') AS 'ULT.VEZ.ONLINE',\r\n\tDATE_FORMAT(fo.last_downtime, '%d-%m-%Y %H:%i:%s') AS 'ULT.VEZ.OFFLINE',\r\n\tDATE_FORMAT(CONVERT_TZ(fo.timestamp, '+00:00', '-03:00'), '%d-%m-%Y %H:%i:%s') AS 'ULT.VERIFICACAO'\r\n\tFROM ftth_onu AS fo\r\n\tLEFT JOIN (\r\n\t\tSELECT foh.onu_fk_id, onurx, onutx, oltrx\r\n\t\tFROM ftth_onuhistory AS foh\r\n\t\tINNER JOIN (\r\n\t\t\tSELECT onu_fk_id, MAX(timestamp) AS max_timestamp\r\n\t\t\tFROM ftth_onuhistory\r\n\t\t\tGROUP BY onu_fk_id\r\n\t\t) AS foh_max ON foh.onu_fk_id = foh_max.onu_fk_id AND foh.timestamp = foh_max.max_timestamp\r\n\t) AS h ON fo.id = h.onu_fk_id inner join ftth_olt olt on (fo.olt_fk_id = olt.id) WHERE olt.nome LIKE \"%$olt%\" AND fo.status in ($onu_status)\r\n\tAND (fo.reason in ($reason) or fo.reason is null) AND fo.pon in ($pon)\r\n\tORDER BY\r\n  SUBSTRING_INDEX(pon, ' ', -3) + 0,\r\n  SUBSTRING_INDEX(SUBSTRING_INDEX(pon, ' ', -2), '/', -2) + 0,\r\n  SUBSTRING_INDEX(SUBSTRING_INDEX(pon, ' ', -1), '/', -1) + 0;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Visão Geral por Ramal - Beesoft",
+      "type": "table"
+    }
+  ],
+  "refresh": "5m",
+  "revision": 1,
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {},
+        "datasource": {
+          "type": "mysql",
+          "uid": "${DS_MYSQL-BEESOFT}"
+        },
+        "definition": "select nome from ftth_olt;",
+        "hide": 0,
+        "includeAll": false,
+        "label": "OLT",
+        "multi": false,
+        "name": "olt",
+        "options": [],
+        "query": "select nome from ftth_olt;",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "mysql",
+          "uid": "${DS_MYSQL-BEESOFT}"
+        },
+        "definition": "select pon from ftth_onu onu\ninner join ftth_olt olt on (onu.olt_fk_id = olt.id)\nwhere olt.nome like '%$olt%'\norder by\nSUBSTRING_INDEX(pon, ' ', -3) + 0,\nSUBSTRING_INDEX(SUBSTRING_INDEX(pon, ' ', -2), '/', -2) + 0,\nSUBSTRING_INDEX(SUBSTRING_INDEX(pon, ' ', -1), '/', -1) + 0;",
+        "hide": 0,
+        "includeAll": true,
+        "label": "PON",
+        "multi": true,
+        "name": "pon",
+        "options": [],
+        "query": "select pon from ftth_onu onu\ninner join ftth_olt olt on (onu.olt_fk_id = olt.id)\nwhere olt.nome like '%$olt%'\norder by\nSUBSTRING_INDEX(pon, ' ', -3) + 0,\nSUBSTRING_INDEX(SUBSTRING_INDEX(pon, ' ', -2), '/', -2) + 0,\nSUBSTRING_INDEX(SUBSTRING_INDEX(pon, ' ', -1), '/', -1) + 0;",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "mysql",
+          "uid": "${DS_MYSQL-BEESOFT}"
+        },
+        "definition": "select serial from ftth_onu onu\ninner join ftth_olt olt on (olt.id = onu.olt_fk_id)\nwhere olt.nome like \"%$olt%\";",
+        "description": "",
+        "hide": 0,
+        "includeAll": false,
+        "label": "SN",
+        "multi": false,
+        "name": "serial",
+        "options": [],
+        "query": "select serial from ftth_onu onu\ninner join ftth_olt olt on (olt.id = onu.olt_fk_id)\nwhere olt.nome like \"%$olt%\";",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "mysql",
+          "uid": "${DS_MYSQL-BEESOFT}"
+        },
+        "definition": "select distinct(status) from ftth_onu onu\ninner join ftth_olt olt on (onu.olt_fk_id = olt.id)\nwhere olt.nome like '%$olt%';",
+        "hide": 0,
+        "includeAll": true,
+        "label": "ONU Status",
+        "multi": true,
+        "name": "onu_status",
+        "options": [],
+        "query": "select distinct(status) from ftth_onu onu\ninner join ftth_olt olt on (onu.olt_fk_id = olt.id)\nwhere olt.nome like '%$olt%';",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "mysql",
+          "uid": "${DS_MYSQL-BEESOFT}"
+        },
+        "definition": "select reason from ftth_onu onu\ninner join ftth_olt olt on (onu.olt_fk_id = olt.id)\nwhere olt.nome like '%$olt%';",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Motivo",
+        "multi": true,
+        "name": "reason",
+        "options": [],
+        "query": "select reason from ftth_onu onu\ninner join ftth_olt olt on (onu.olt_fk_id = olt.id)\nwhere olt.nome like '%$olt%';",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Dashboa Análise de ONUs (Geral) - Beesoft 2.0",
+  "uid": "ca3bf5bb-58f3-445b-939a-aae7b2596db4",
+  "version": 7,
+  "weekStart": ""
+}

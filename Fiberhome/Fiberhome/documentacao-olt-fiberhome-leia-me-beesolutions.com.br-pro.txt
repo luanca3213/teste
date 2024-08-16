@@ -1,0 +1,166 @@
+#Desenvolvido por: Bee Solutions
+#Documentado por: Fernando Almondes
+#Data: 02/07/2023 01:59
+#Objetivo: Monitoramento de uma OLT Fiberhome
+#SO Homologadas: Ubuntu Server 20.04 ou 22.04 e Debian
+#Revisao: 01/08/2024 20:00
+
+#Link da comunidade:
+https://t.me/beesolutions
+
+#Instagram:
+@fernandoalmondes
+@beesolutionsoficial
+
+#Meu Site (Consultorias e/ou contratação do Beesoft):
+https://beesolutions.com.br
+
+#### Parte 1 ####
+
+1. Crie os diretorios de base do projeto
+mkdir -p /opt/bee/
+mkdir /opt/bee/tmp/
+mkdir /opt/bee/tmp/listas
+mkdir -p /var/tmp/zabbix/
+mkdir -p /var/tmp/zabbix/fh
+mkdir -p /opt/bee/tmp/logs/
+mkdir -p /opt/bee/tmp/fh
+
+chown -R zabbix:zabbix /var/tmp/zabbix/
+
+cd /opt/bee/
+
+2. Instale as dependencias
+apt-get install python3-dev default-libmysqlclient-dev build-essential python3-venv pkg-config dos2unix snmp
+
+3. Crie um ambiente virtual
+python3 -m venv venv
+
+4. Ative o ambiente virtual e instale as dependencias
+source venv/bin/activate
+
+5. Faca o download das dependencias do projeto (Arquivo no diretorio django)
+pip install -r /opt/bee/dependencias.txt
+
+6. Crie o banco de dados que voce vai usar na aplicacao (Nesse exemplo coloquei um usuario para o grafana, pra caso voce queira consulta o banco de dados diretamente por la...)
+mysql -u root -p
+mysql> create database beesoft_db_01 character set utf8mb4 collate utf8mb4_bin;
+mysql> create user beesoftadmin@localhost identified by 'vvss1711';
+mysql> grant all privileges on beesoft_db_01.* to beesoftadmin@localhost;
+
+mysql> create user beesoftconsultor@localhost identified by 'vvss1711';
+mysql> grant SELECT on beesoft_db_01.* to beesoftconsultor@localhost;
+mysql> quit
+
+
+7. Crie o projeto django (ATENCAO AQUI: Esse ponto "." no final e importante, nao esqueca de adicionar)
+django-admin startproject beesoft .
+
+8. Crie um app django
+django-admin startapp ftth
+
+9. Ajuste o arquivo de configuração conforme exemplo junto aos arquivos
+mv /opt/bee/beesoft/settings.py /opt/bee/beesoft/settings.py.bkp
+
+# Cole aqui todo o conteudo do arquivo settings.py
+nano /opt/bee/beesoft/settings.py
+
+10. Crie o arquivo chave.py
+nano /opt/bee/beesoft/chave.py
+
+# Execute o script para gerar as chaves (Guarde essas chaves que você vai as utilizar em seguida)
+python /opt/bee/beesoft/chave.py
+
+11. Crie o arquivo com as credenciais conforme exemplo junto aos arquivos (Adicione o IP do seu servidor)
+nano /opt/bee/beesoft/.env
+
+SECRET_KEY=SECRET-KEY-AQUI
+FERNET_KEY=FERNET-KEY-AQUI
+DEBUG=True
+ALLOWED_HOSTS=127.0.0.1, localhost, beesoft.provedor.com.br, SEU-IP-DO-SERVIDOR-AQUI
+DB_NAME=beesoft_db_01
+DB_USER=beesoftadmin
+DB_PASSWORD=SENHA-DO-BD
+DB_HOST=127.0.0.1
+DB_PORT=3306
+
+12. Adicione o conteudo do models.py
+mv /opt/bee/ftth/models.py ftth/models.py.bkp
+
+# Cole aqui todo o conteudo do arquivo models.py
+nano /opt/bee/ftth/models.py
+
+13. Adicione o conteudo do admin.py
+mv /opt/bee/ftth/admin.py ftth/admin.py.bkp
+
+# Cole aqui todo o conteudo do arquivo admin.py
+nano /opt/bee/ftth/admin.py
+
+# Crie o arquivo de template para o form de cadastro da OLT (Cole aqui o conteudo do arquivos forms.py disponivel junto aos arquivos)
+nano /opt/bee/ftth/forms.py
+
+14. Faca a migracao dos dados
+python manage.py makemigrations
+python manage.py migrate
+
+15. Crie um novo super-usuario para acessar o admin do django
+python manage.py createsuperuser
+
+16. Realize um teste, e inicie o admin para poder cadastrar as OLTs (Nesse exemplo toda vez que voce precisar cadastrar uma nova OLT basta iniciar o Amin. Posso mostrar depois como deixar esse servico rodando em segundo plano. hehe)
+python manage.py runserver IP-SEU-SERVIDOR:9000
+
+#Acesse a pagina do django admin via:
+http://IP-SEU-SERVIDOR:9000/admin
+
+# Abra o admin e cadastre as suas OLT Fiberhome
+
+#### Parte 2 ####
+
+17. Crie um arquivo para acesso ao banco de dados via o ponfh.sh
+nano /opt/bee/beesoft/.my.cnf
+
+[client]
+host = 127.0.0.1
+user = beesoftadmin
+password = 'AQUI-VOCE-COLOCA-SUA-SUPER-SENHA-PRA-APLICACAO'
+
+18. Copie os arquivos contador.sh e ponfh.sh para o diretorio de scripts do Zabbix (/usr/lib/zabbix/externalscripts/)
+19. Copie os arquivos agente_ftth_fiberhome_import_csv_beesoft_pro.py, agente_ftth_fiberhome_exe_beesoft_pro.sh e agente_ftth_fiberhome_cache.py para o diretorio do projeto (/opt/bee/)
+
+20. Copie os arquivos ponfth.sh e contador.sh para o diretorio de script do zabbix e renomei o arquivo ponfh.sh (ponfh vai ser usado pelo zabbix | contador.sh pelo crontab)
+mv /usr/lib/zabbix/externalscripts/ponfh.sh /usr/lib/zabbix/externalscripts/ponfh
+
+21. De permissao de execucao aos scripts
+chmod +x /usr/lib/zabbix/externalscripts/ponfh
+chmod +x /usr/lib/zabbix/externalscripts/contador.sh
+chmod +x /opt/bee/agente_ftth_fiberhome_import_csv_beesoft_pro.py
+chmod +x /opt/bee/agente_ftth_fiberhome_exe_beesoft_pro.sh
+chmod +x /opt/bee/agente_ftth_fiberhome_cache.py
+
+22. Adicione as informacoes ao crontab (Ex: execucao a cada 15 minutos):
+
+crontab -e
+
+# Atualizando a lista de dados recentes | Contadores
+*/15 * * * * /usr/lib/zabbix/externalscripts/contador.sh IP-DA-SUA-OLT-AQUI adsl > /opt/bee/tmp/logs/log_contador_onucache_IP-DA-SUA-OLT-AQUI.txt
+
+# Atualizando a lista de ONUs Fiberhome | Sinal
+3 5 * * * /opt/bee/agente_ftth_fiberhome_exe_beesoft_pro.sh IP-DA-SUA-OLT-AQUI adsl > /opt/bee/tmp/logs/log_agente_ftth_fiberhome_exe_beesoft_pro_IP-DA-SUA-OLT-AQUI.txt
+
+23. Extras
+
+# Scripts para descoberta de interfaces usado no template Template Interfaces Fisicas OLT by SNMP - BEE.yaml (Copie o script para o diretorio de scripts do Zabbix (/usr/lib/zabbix/externalscripts/))
+
+chmod +x /usr/lib/zabbix/externalscripts/discovery_interfaces.py
+dos2unix /usr/lib/zabbix/externalscripts/discovery_interfaces.py
+
+# Script para limpeza de onus nao mais encontradas (Copie para o diretorio do projeto: /opt/bee/)
+chmod +x /opt/bee/agente_limpador_beesoft.sh
+
+# Adicionando o script de limpeza ao crontab
+crontab -e
+
+# Observe que OLT- vai corresponder a a qualquer OLT cadastrada no admin que tenha no inicio do nome 'OLT-' e o 3 e a quantidade de dias
+0 6 * * * /opt/bee/agente_limpador_beesoft.sh 'OLT-' 3 > /opt/bee/tmp/logs/agente_limpador_beesoft.txt
+
+24. Importe os templates no Zabbix e os arquivos json no Grafana | Aproveite ;)
